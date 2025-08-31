@@ -10,18 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import one.vitaliy.mygaragesample.api.CarDomain
 import one.vitaliy.mygaragesample.list.VEHICLE_LIST_GRAPH_ROUTE
 import one.vitaliy.mygaragesample.list.vehicleList
-import vwg.skoda.maulcompose.lib.components.MaulPreview
 import vwg.skoda.maulcompose.lib.components.MaulToolbar
 import vwg.skoda.maulcompose.lib.foundation.MaulTheme
 
@@ -32,9 +27,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val text by viewModel.carList.collectAsStateWithLifecycle()
             MaulTheme {
-                MainContent(text)
+                MainContent(viewModel)
             }
         }
     }
@@ -42,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainContent(
-    cars: List<CarDomain>,
+    viewModel: MainViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -61,16 +55,8 @@ private fun MainContent(
             modifier = Modifier.padding(innerPadding),
         ) {
             vehicleList(
-                cars,
+                viewModel = viewModel,
                 onVehicleDetailsClicked = { navController.navigate(it) })
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MaulPreview {
-        MainContent(cars = emptyList())
     }
 }
