@@ -5,6 +5,8 @@ import one.vitaliy.mygaragesample.api.model.MyCarResponse
 import one.vitaliy.mygaragesample.api.model.RenderViewPoint
 import vwg.skoda.maulcompose.lib.components.MaulListItemData
 
+// TODO: not sure how the data from the API comes, if possible, we should consolidate related values
+//  into their respective data classes to avoid large constructors.
 @Serializable
 internal data class CarDomain(
     val body: String,
